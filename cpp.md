@@ -102,7 +102,7 @@ void countAlphabetOccurrences(const string& text) {
     cout << "Letter | Occurrences" << endl;
     cout << "----------------------" << endl;
     for (char letter = 'a'; letter <= 'z'; letter++) {
-        // If the letter exists in the map, print its frequency
+     
         if (frequency.find(letter) != frequency.end()) {
             cout << letter << "      | " << frequency[letter] << endl;
         } else {
@@ -111,12 +111,12 @@ void countAlphabetOccurrences(const string& text) {
     }
 }
 int main(int argc, char* argv[]) {
-    // Check if any command line arguments were provided
+  
     if (argc < 2) {
         cout << "Please provide a text input as a command line argument." << endl;
         return 1; 
     }
-    // Concatenate the command line arguments into a single string
+  
     string text = "";
     for (int i = 1; i < argc; i++) {
         text += string(argv[i]) + " ";  
@@ -327,7 +327,6 @@ void mergeArrays(int arr1[], int n1, int arr2[], int n2, int merged[]) {
         merged[k++] = arr2[j++];
     }
 }
-// Function to print an array
 void printArray(int arr[], int size) {
     for (int i = 0; i < size; i++) {
         cout << arr[i] << " ";
@@ -336,7 +335,7 @@ void printArray(int arr[], int size) {
 }
 int main() {
     int n1, n2;
-    // Input the size and elements of the first array
+  
     cout << "Enter the size of the first array: ";
     cin >> n1;
     int arr1[n1];
@@ -344,7 +343,6 @@ int main() {
     for (int i = 0; i < n1; i++) {
         cin >> arr1[i];
     }
-    // Input the size and elements of the second array
     cout << "Enter the size of the second array: ";
     cin >> n2;
     int arr2[n2];
@@ -352,11 +350,10 @@ int main() {
     for (int i = 0; i < n2; i++) {
         cin >> arr2[i];
     }
-    // Create an array to hold the merged result
     int merged[n1 + n2];
-    // Merge the arrays
+ 
     mergeArrays(arr1, n1, arr2, n2, merged);
-    // Output the merged array
+    
     cout << "Merged array: ";
     printArray(merged, n1 + n2);
     return 0;
@@ -368,42 +365,42 @@ int main() {
 ```
 #include <iostream>
 using namespace std;
-// Function for binary search with recursion
+
 int binarySearchRecursive(int arr[], int low, int high, int target) {
-    // Base case: element is not found
+
     if (low > high) {
         return -1;
     }
-    // Find the middle element
+
     int mid = low + (high - low) / 2;
-    // Check if the target is at the middle
+  
     if (arr[mid] == target) {
         return mid;
     }
-    // If target is smaller, search in the left half
+   
     else if (arr[mid] > target) {
         return binarySearchRecursive(arr, low, mid - 1, target);
     }
-    // If target is larger, search in the right half
+   
     else {
         return binarySearchRecursive(arr, mid + 1, high, target);
     }
 }
 int main() {
     int n, target;
-    // Input the number of elements
+   
     cout << "Enter the number of elements: ";
     cin >> n;
     int arr[n];
-    // Input the sorted elements
+    
     cout << "Enter the sorted elements: ";
     for (int i = 0; i < n; i++) {
         cin >> arr[i];
     }
-    // Input the target element to search for
+   
     cout << "Enter the element to search for: ";
     cin >> target;
-    // Binary search with recursion
+    
     int resultRecursive = binarySearchRecursive(arr, 0, n - 1, target);
     if (resultRecursive != -1) {
         cout << "Element found at index (recursive): " << resultRecursive << endl;
@@ -418,43 +415,43 @@ int main() {
 ```
 #include <iostream>
 using namespace std;
-// Function for binary search without recursion
+
 int binarySearchIterative(int arr[], int n, int target) {
     int low = 0, high = n - 1;
-    // Continue searching while the range is valid
+   
     while (low <= high) {
         int mid = low + (high - low) / 2;
-        // Check if the target is at the middle
+       
         if (arr[mid] == target) {
             return mid;
         }
-        // If target is smaller, search in the left half
+       
         else if (arr[mid] > target) {
             high = mid - 1;
         }
-        // If target is larger, search in the right half
+        
         else {
             low = mid + 1;
         }
     }
-    // If the element is not found, return -1
+ 
     return -1;
 }
 int main() {
     int n, target;
-    // Input the number of elements
+   
     cout << "Enter the number of elements: ";
     cin >> n;
     int arr[n];
-    // Input the sorted elements
+    
     cout << "Enter the sorted elements: ";
     for (int i = 0; i < n; i++) {
         cin >> arr[i];
     }
-    // Input the target element to search for
+    
     cout << "Enter the element to search for: ";
     cin >> target;
-    // Binary search without recursion
+   
     int resultIterative = binarySearchIterative(arr, n, target);
     if (resultIterative != -1) {
         cout << "Element found at index (iterative): " << resultIterative << endl;
