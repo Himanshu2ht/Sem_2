@@ -872,44 +872,44 @@ public:
     }
 };
 int main() {
-    // File to store student records
+   
     ofstream outFile("students.txt");
-    // Check if the file is opened successfully
+   
     if (!outFile) {
         cerr << "File could not be opened for writing!" << endl;
         return 1;
     }
-    // Create 5 Student objects
+
     Student s1(1, "Alice", "Math", 2023, 450);
     Student s2(2, "Bob", "Science", 2023, 400);
     Student s3(3, "Charlie", "History", 2023, 480);
     Student s4(4, "David", "English", 2023, 470);
     Student s5(5, "Eve", "Computer Science", 2023, 490);
-    // Write student details to the file
+  
     s1.writeToFile(outFile);
     s2.writeToFile(outFile);
     s3.writeToFile(outFile);
     s4.writeToFile(outFile);
     s5.writeToFile(outFile);
-    // Close the file after writing
+ 
     outFile.close();
-    // Read and display the student records from the file
+   
     ifstream inFile("students.txt");
-    // Check if the file is opened successfully
+
     if (!inFile) {
         cerr << "File could not be opened for reading!" << endl;
         return 1;
     }
     cout << "\nStudent records retrieved from file:\n";
-    // Create a Student object to read data into
+  
     Student tempStudent(0, "", "", 0, 0);
-    // Read and display all 5 student records from the file
+   
     for (int i = 0; i < 5; ++i) {
         tempStudent.readFromFile(inFile);
         tempStudent.display();
         cout << "-------------------------------\n";
     }
-    // Close the file after reading
+  
     inFile.close();
     return 0;
 }
@@ -919,35 +919,35 @@ int main() {
 ```
 #include <iostream>
 #include <fstream>
-#include <cctype>  // For checking whitespace
+#include <cctype>  
 using namespace std;
 int main() {
-    // Input and output file names
+    
     string inputFile = "input.txt";
     string outputFile = "output.txt";
-    // Open the input file for reading
+   
     ifstream inFile(inputFile);
-    // Check if the file opened successfully
+  
     if (!inFile) {
         cerr << "Error: Unable to open input file!" << endl;
         return 1;
     }
-    // Open the output file for writing
+ 
     ofstream outFile(outputFile);
-    // Check if the file opened successfully
+   
     if (!outFile) {
         cerr << "Error: Unable to open output file!" << endl;
         return 1;
     }
     char ch;
-    // Read characters from the input file
+  
     while (inFile.get(ch)) {
-        // If the character is not a whitespace, write it to the output file
+       
         if (!isspace(ch)) {
             outFile.put(ch);
         }
     }
-    // Close the files
+   
     inFile.close();
     outFile.close();
     cout << "File contents copied successfully without whitespaces." << endl;
@@ -959,24 +959,24 @@ int main() {
 # Program 13
 ```
 #include <iostream>
-#include <stdexcept> // For exception handling
+#include <stdexcept>
 using namespace std;
 int main() {
     double p, q;
-    // Taking input for p and q
+
     cout << "Enter two numbers (p and q): ";
     cin >> p >> q;
     try {
-        // If q is zero, throw an exception
+      
         if (q == 0) {
             throw runtime_error("Error: Division by zero is not allowed.");
         }
-        // Perform the division and display the result
+       
         double result = p / q;
         cout << "Result of " << p << " / " << q << " = " << result << endl;
     }
     catch (const runtime_error& e) {
-        // Catch and handle the exception
+       
         cout << e.what() << endl;
     }
     return 0;
