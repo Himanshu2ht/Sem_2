@@ -521,11 +521,11 @@ private:
     int rows, cols;
     vector<vector<int>> mat;
 public:
-    // Constructor to initialize the matrix with given dimensions and values
+
     Matrix(int r, int c) : rows(r), cols(c) {
         mat.resize(rows, vector<int>(cols));
     }
-    // Function to input values into the matrix
+   
     void inputMatrix() {
         cout << "Enter elements of the matrix (" << rows << "x" << cols << "):\n";
         for (int i = 0; i < rows; i++) {
@@ -534,7 +534,7 @@ public:
             }
         }
     }
-    // Function to display the matrix
+     
     void displayMatrix() const {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
@@ -543,7 +543,7 @@ public:
             cout << endl;
         }
     }
-    // Function to perform matrix addition
+  
     Matrix add(const Matrix& m) {
         if (rows != m.rows || cols != m.cols) {
             throw invalid_argument("Matrices dimensions do not match for addition.");
@@ -556,7 +556,7 @@ public:
         }
         return result;
     }
-    // Function to perform matrix multiplication
+   
     Matrix multiply(const Matrix& m) {
         if (cols != m.rows) {
             throw invalid_argument("Matrices dimensions are incompatible for multiplication.");
@@ -572,7 +572,7 @@ public:
         }
         return result;
     }
-    // Function to perform matrix transpose
+
     Matrix transpose() {
         Matrix result(cols, rows);
         for (int i = 0; i < rows; i++) {
@@ -596,7 +596,7 @@ int main() {
         cout << "Enter your choice: ";
         cin >> choice;
         switch (choice) {
-            case 1: { // Sum of matrices
+            case 1: { 
                 int r, c;
                 cout << "Enter dimensions of matrix 1 (rows columns): ";
                 cin >> r >> c;
@@ -618,7 +618,7 @@ int main() {
                 delete m2;
                 break;
             }
-            case 2: { // Product of matrices
+            case 2: { 
                 int r1, c1, r2, c2;
                 cout << "Enter dimensions of matrix 1 (rows columns): ";
                 cin >> r1 >> c1;
@@ -639,7 +639,7 @@ int main() {
                 delete m2;
                 break;
             }
-            case 3: { // Transpose of matrix
+            case 3: { 
                 int r, c;
                 cout << "Enter dimensions of matrix (rows columns): ";
                 cin >> r >> c;
@@ -670,30 +670,30 @@ int main() {
 #include <iostream>
 #include <string>
 using namespace std;
-// Base class Person
+
 class Person {
 protected:
-    string name; // Data member to store name
+    string name;
 public:
-    // Constructor to initialize the name
+    
     Person(string n) : name(n) {}
-    // Virtual function for runtime polymorphism
+ 
     virtual void display() {
         cout << "Name: " << name << endl;
     }
-    // Destructor (virtual to ensure proper cleanup in derived classes)
+
     virtual ~Person() {}
 };
-// Derived class Student
+
 class Student : public Person {
 private:
     string course;
     float marks;
     int year;
 public:
-    // Constructor to initialize attributes
+    
     Student(string n, string c, float m, int y) : Person(n), course(c), marks(m), year(y) {}
-    // Overriding display method to show Student's attributes
+   
     void display() override {
         cout << "Student Name: " << name << endl;
         cout << "Course: " << course << endl;
@@ -701,15 +701,14 @@ public:
         cout << "Year: " << year << endl;
     }
 };
-// Derived class Employee
+
 class Employee : public Person {
 private:
     string department;
     float salary;
 public:
-    // Constructor to initialize attributes
     Employee(string n, string d, float s) : Person(n), department(d), salary(s) {}
-    // Overriding display method to show Employee's attributes
+  
     void display() override {
         cout << "Employee Name: " << name << endl;
         cout << "Department: " << department << endl;
@@ -718,15 +717,15 @@ public:
 };
 // Main function
 int main() {
-    // Creating objects of Student and Employee classes
+  
     Person* p1 = new Student("Alice", "Computer Science", 88.5, 2);
     Person* p2 = new Employee("Bob", "IT", 50000);
-    // Displaying the details using runtime polymorphism
+   
     cout << "Displaying Student details:" << endl;
     p1->display();
     cout << "\nDisplaying Employee details:" << endl;
     p2->display();
-    // Cleaning up the dynamically allocated memory
+ 
     delete p1;
     delete p2;
     return 0;
@@ -737,13 +736,13 @@ int main() {
 ```
 #include <iostream>
 #include <cmath>
-#include <stdexcept> // For exception handling
+#include <stdexcept> 
 using namespace std;
 class Triangle {
 private:
     double side1, side2, side3;
 public:
-    // Constructor to initialize the sides of the triangle
+   
     Triangle(double s1, double s2, double s3) {
         if (s1 <= 0 || s2 <= 0 || s3 <= 0) {
             throw invalid_argument("Sides must be greater than 0.");
@@ -755,7 +754,7 @@ public:
         side2 = s2;
         side3 = s3;
     }
-    // Function to calculate the area of a right-angled triangle
+    
     double calculateArea() const {
         if (isRightAngled()) {
             double base = side1, height = side2;
@@ -763,22 +762,22 @@ public:
         }
         throw invalid_argument("Not a right-angled triangle.");
     }
-    // Function to calculate the area using Heron's formula
+  
     double calculateAreaUsingHeronsFormula() const {
         double s = (side1 + side2 + side3) / 2; // Semi-perimeter
         double area = sqrt(s * (s - side1) * (s - side2) * (s - side3));
         return area;
     }
-    // Function to check if the triangle is right-angled (using Pythagoras theorem)
+   
     bool isRightAngled() const {
         double a = side1, b = side2, c = side3;
-        // Check if the triangle satisfies the Pythagoras theorem
+        
         if (a * a + b * b == c * c || a * a + c * c == b * b || b * b + c * c == a * a) {
             return true;
         }
         return false;
     }
-    // Overloading the assignment operator
+    
     Triangle& operator=(const Triangle& other) {
         if (this != &other) {
             side1 = other.side1;
@@ -787,31 +786,31 @@ public:
         }
         return *this;
     }
-    // Overloading the equality operator
+    
     bool operator==(const Triangle& other) const {
         return (side1 == other.side1 && side2 == other.side2 && side3 == other.side3);
     }
-    // Method to display the sides of the triangle
+   
     void display() const {
         cout << "Sides of the triangle: " << side1 << ", " << side2 << ", " << side3 << endl;
     }
 };
 int main() {
     try {
-        // Creating a triangle object
+       
         Triangle t1(3, 4, 5); // Right-angled triangle
         t1.display();
         cout << "Area of the right-angled triangle: " << t1.calculateArea() << endl;
-        // Creating another triangle object
+       
         Triangle t2(5, 6, 7); // General triangle
         t2.display();
         cout << "Area using Heron's formula: " << t2.calculateAreaUsingHeronsFormula() << endl;
-        // Testing assignment operator
+      
         Triangle t3(0, 0, 0); // Initializing with dummy values
-        t3 = t1; // Assignment of t1 to t3
+        t3 = t1; 
         cout << "\nAfter assignment, t3 is:\n";
         t3.display();
-        // Testing equality operator
+      
         if (t1 == t3) {
             cout << "\nt1 and t3 are equal." << endl;
         } else {
@@ -839,10 +838,10 @@ private:
     int year;
     float totalMarks;
 public:
-    // Constructor to initialize a Student object
+  
     Student(int r, string n, string c, int y, float t) 
         : rollNo(r), name(n), studentClass(c), year(y), totalMarks(t) {}
-    // Method to write student details to a file
+  
     void writeToFile(ofstream &file) {
         file << rollNo << endl;
         file << name << endl;
@@ -850,16 +849,16 @@ public:
         file << year << endl;
         file << totalMarks << endl;
     }
-    // Method to read student details from a file
+    
     void readFromFile(ifstream &file) {
         file >> rollNo;
-        file.ignore();  // Ignore the newline character after reading rollNo
+        file.ignore(); 
         getline(file, name);
         getline(file, studentClass);
         file >> year;
         file >> totalMarks;
     }
-    // Method to display the student's information
+   
     void display() const {
         cout << "Roll No: " << rollNo << endl;
         cout << "Name: " << name << endl;
