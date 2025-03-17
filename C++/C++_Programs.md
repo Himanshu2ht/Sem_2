@@ -340,12 +340,15 @@ int main() {
 # Program 5
 ```
 #include <iostream>
+#include <vector> // Include vector for dynamic array allocation
 using namespace std;
 
-void mergeArrays(int arr1[], int n1, int arr2[], int n2, int merged[]) {
+// Function to merge two sorted arrays into a single sorted array
+void mergeArrays(const vector<int>& arr1, const vector<int>& arr2, vector<int>& merged) {
     int i = 0, j = 0, k = 0;
-   
-    while (i < n1 && j < n2) {
+
+    // Merge the two arrays
+    while (i < arr1.size() && j < arr2.size()) {
         if (arr1[i] < arr2[j]) {
             merged[k++] = arr1[i++];
         } else {
@@ -353,213 +356,282 @@ void mergeArrays(int arr1[], int n1, int arr2[], int n2, int merged[]) {
         }
     }
     // If there are remaining elements in arr1, add them
-    while (i < n1) {
+    while (i < arr1.size()) {
         merged[k++] = arr1[i++];
     }
     // If there are remaining elements in arr2, add them
-    while (j < n2) {
+    while (j < arr2.size()) {
         merged[k++] = arr2[j++];
     }
 }
-void printArray(int arr[], int size) {
-    for (int i = 0; i < size; i++) {
-        cout << arr[i] << " ";
+
+// Function to print the elements of an array
+void printArray(const vector<int>& arr) {
+    for (int num : arr) {
+        cout << num << " ";
     }
     cout << endl;
 }
+
 int main() {
     int n1, n2;
-  
+
     cout << "Enter the size of the first array: ";
     cin >> n1;
-    int arr1[n1];
+    // Input validation for the first array size
+    while (n1 <= 0) {
+        cout << "Please enter a positive integer for the size of the first array: ";
+        cin >> n1;
+    }
+    vector<int> arr1(n1); // Use vector for dynamic array allocation
     cout << "Enter the elements of the first array in sorted order: ";
     for (int i = 0; i < n1; i++) {
         cin >> arr1[i];
     }
+
     cout << "Enter the size of the second array: ";
     cin >> n2;
-    int arr2[n2];
+    // Input validation for the second array size
+    while (n2 <= 0) {
+        cout << "Please enter a positive integer for the size of the second array: ";
+        cin >> n2;
+    }
+    vector<int> arr2(n2); // Use vector for dynamic array allocation
     cout << "Enter the elements of the second array in sorted order: ";
     for (int i = 0; i < n2; i++) {
         cin >> arr2[i];
     }
-    int merged[n1 + n2];
- 
-    mergeArrays(arr1, n1, arr2, n2, merged);
-    
+
+    vector<int> merged(n1 + n2); // Create a vector to hold the merged array
+
+    mergeArrays(arr1, arr2, merged); // Merge the two arrays
+
     cout << "Merged array: ";
-    printArray(merged, n1 + n2);
+    printArray(merged); // Print the merged array
     return 0;
 }
 ```
+![image](https://github.com/user-attachments/assets/850d5def-c2c2-451a-8465-add381040c0c)
+
 # Program 6
 ## 1. with recursion
 
 ```
 #include <iostream>
+#include <vector> // Include vector for dynamic array allocation
 using namespace std;
 
-int binarySearchRecursive(int arr[], int low, int high, int target) {
-
+// Function to perform binary search recursively
+int binarySearchRecursive(const vector<int>& arr, int low, int high, int target) {
     if (low > high) {
-        return -1;
+        return -1; // Target not found
     }
 
     int mid = low + (high - low) / 2;
-  
+
     if (arr[mid] == target) {
-        return mid;
-    }
-   
-    else if (arr[mid] > target) {
-        return binarySearchRecursive(arr, low, mid - 1, target);
-    }
-   
-    else {
-        return binarySearchRecursive(arr, mid + 1, high, target);
+        return mid; // Target found
+    } else if (arr[mid] > target) {
+        return binarySearchRecursive(arr, low, mid - 1, target); // Search in the left half
+    } else {
+        return binarySearchRecursive(arr, mid + 1, high, target); // Search in the right half
     }
 }
+
 int main() {
     int n, target;
-   
+
     cout << "Enter the number of elements: ";
     cin >> n;
-    int arr[n];
-    
+
+    // Input validation for the number of elements
+    while (n <= 0) {
+        cout << "Please enter a positive integer for the number of elements: ";
+        cin >> n;
+    }
+
+    vector<int> arr(n); // Use vector for dynamic array allocation
+
     cout << "Enter the sorted elements: ";
     for (int i = 0; i < n; i++) {
         cin >> arr[i];
     }
-   
+
     cout << "Enter the element to search for: ";
     cin >> target;
-    
+
     int resultRecursive = binarySearchRecursive(arr, 0, n - 1, target);
     if (resultRecursive != -1) {
         cout << "Element found at index (recursive): " << resultRecursive << endl;
     } else {
         cout << "Element not found (recursive)." << endl;
     }
+
     return 0;
 }
 ```
+![image](https://github.com/user-attachments/assets/5e44e5d7-716d-4eba-8caf-f33186dd612d)
 
 ## 2. without recursion
 ```
 #include <iostream>
+#include <vector> // Include vector for dynamic array allocation
 using namespace std;
 
-int binarySearchIterative(int arr[], int n, int target) {
+// Function to perform binary search iteratively
+int binarySearchIterative(const vector<int>& arr, int n, int target) {
     int low = 0, high = n - 1;
-   
+
     while (low <= high) {
         int mid = low + (high - low) / 2;
-       
+
         if (arr[mid] == target) {
-            return mid;
-        }
-       
-        else if (arr[mid] > target) {
-            high = mid - 1;
-        }
-        
-        else {
-            low = mid + 1;
+            return mid; // Target found
+        } else if (arr[mid] > target) {
+            high = mid - 1; // Search in the left half
+        } else {
+            low = mid + 1; // Search in the right half
         }
     }
- 
-    return -1;
+
+    return -1; // Target not found
 }
+
 int main() {
     int n, target;
-   
+
     cout << "Enter the number of elements: ";
     cin >> n;
-    int arr[n];
-    
+
+    // Input validation for the number of elements
+    while (n <= 0) {
+        cout << "Please enter a positive integer for the number of elements: ";
+        cin >> n;
+    }
+
+    vector<int> arr(n); // Use vector for dynamic array allocation
+
     cout << "Enter the sorted elements: ";
     for (int i = 0; i < n; i++) {
         cin >> arr[i];
     }
-    
+
     cout << "Enter the element to search for: ";
     cin >> target;
-   
+
     int resultIterative = binarySearchIterative(arr, n, target);
     if (resultIterative != -1) {
         cout << "Element found at index (iterative): " << resultIterative << endl;
     } else {
         cout << "Element not found (iterative)." << endl;
     }
+
     return 0;
 }
 ```
+![image](https://github.com/user-attachments/assets/1b6fe856-1947-4ad9-a5f5-297eb580b1bd)
 
 # Program 7
 ## 1. with recursion
 ```
 #include <iostream>
+#include <cstdlib> // For std::abs
 using namespace std;
-// Recursive function to calculate GCD using Euclidean algorithm
+
+// Recursive function to calculate GCD using the Euclidean algorithm
 int gcdRecursive(int a, int b) {
-   // Base case: If b is 0, the GCD is a
-   if (b == 0) {
-       return a;
-   }
-   // Recursive case: Call gcd on b and the remainder of a divided by b
-   return gcdRecursive(b, a % b);
+    // Base case: If b is 0, the GCD is a
+    if (b == 0) {
+        return a;
+    }
+    // Recursive case: Call gcd on b and the remainder of a divided by b
+    return gcdRecursive(b, a % b);
 }
+
 int main() {
-   int a, b;
-   cout << "Enter two numbers: ";
-   cin >> a >> b;
-   int result = gcdRecursive(a, b);
-   cout << "GCD of " << a << " and " << b << " is: " << result << endl;
-   return 0;
+    int a, b;
+
+    cout << "Enter two numbers: ";
+    cin >> a >> b;
+
+    // Input validation
+    if (cin.fail()) {
+        cout << "Invalid input. Please enter two integers." << endl;
+        return 1; // Exit with an error code
+    }
+
+    // Use absolute values to handle negative numbers
+    a = abs(a);
+    b = abs(b);
+
+    int result = gcdRecursive(a, b);
+    cout << "GCD of " << a << " and " << b << " is: " << result << endl;
+
+    return 0;
 }
 ```
+![image](https://github.com/user-attachments/assets/3216bb1d-4caf-4618-bc1d-22225718f3a5)
+
 ## 2. without recursion
 ```
 #include <iostream>
+#include <cstdlib> // For std::abs
 using namespace std;
-// Iterative function to calculate GCD using Euclidean algorithm
-int gcdIterative(int a, int b) {
-   // Keep applying the Euclidean algorithm until b becomes 0
-   while (b != 0) {
-       int temp = b;
-       b = a % b; // Find remainder
-       a = temp;  // Update a to b's value
-   }
-   return a; // When b becomes 0, a is the GCD
-}
-int main() {
-   int a, b;
-   cout << "Enter two numbers: ";
-   cin >> a >> b;
-   int result = gcdIterative(a, b);
-   cout << "GCD of " << a << " and " << b << " is: " << result << endl;
-   return 0;
+
+// Recursive function to calculate GCD using the Euclidean algorithm
+int gcdRecursive(int a, int b) {
+    // Base case: If b is 0, the GCD is a
+    if (b == 0) {
+        return a;
+    }
+    // Recursive case: Call gcd on b and the remainder of a divided by b
+    return gcdRecursive(b, a % b);
 }
 
+int main() {
+    int a, b;
+
+    cout << "Enter two numbers: ";
+    cin >> a >> b;
+
+    // Input validation
+    if (cin.fail()) {
+        cout << "Invalid input. Please enter two integers." << endl;
+        return 1; // Exit with an error code
+    }
+
+    // Use absolute values to handle negative numbers
+    a = abs(a);
+    b = abs(b);
+
+    int result = gcdRecursive(a, b);
+    cout << "GCD of " << a << " and " << b << " is: " << result << endl;
+
+    return 0;
+}
 ```
+![image](https://github.com/user-attachments/assets/8cfe50f1-7edf-448b-aa8a-7f40fdc71086)
 
 # Program 8
 ```
 #include <iostream>
 #include <vector>
 #include <stdexcept>
+#include <memory> // For smart pointers
 using namespace std;
+
 class Matrix {
 private:
     int rows, cols;
     vector<vector<int>> mat;
-public:
 
+public:
+    // Constructor to initialize the matrix with given dimensions
     Matrix(int r, int c) : rows(r), cols(c) {
-        mat.resize(rows, vector<int>(cols));
+        mat.resize(rows, vector<int>(cols, 0)); // Initialize with zeros
     }
-   
+
+    // Function to input matrix elements
     void inputMatrix() {
         cout << "Enter elements of the matrix (" << rows << "x" << cols << "):\n";
         for (int i = 0; i < rows; i++) {
@@ -568,7 +640,8 @@ public:
             }
         }
     }
-     
+
+    // Function to display the matrix
     void displayMatrix() const {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
@@ -577,7 +650,8 @@ public:
             cout << endl;
         }
     }
-  
+
+    // Function to add two matrices
     Matrix add(const Matrix& m) {
         if (rows != m.rows || cols != m.cols) {
             throw invalid_argument("Matrices dimensions do not match for addition.");
@@ -590,7 +664,8 @@ public:
         }
         return result;
     }
-   
+
+    // Function to multiply two matrices
     Matrix multiply(const Matrix& m) {
         if (cols != m.rows) {
             throw invalid_argument("Matrices dimensions are incompatible for multiplication.");
@@ -607,6 +682,7 @@ public:
         return result;
     }
 
+    // Function to transpose the matrix
     Matrix transpose() {
         Matrix result(cols, rows);
         for (int i = 0; i < rows; i++) {
@@ -617,10 +693,12 @@ public:
         return result;
     }
 };
+
 int main() {
     int choice;
-    Matrix* m1 = nullptr;
-    Matrix* m2 = nullptr;
+    unique_ptr<Matrix> m1 = nullptr;
+    unique_ptr<Matrix> m2 = nullptr;
+
     while (true) {
         cout << "\nMatrix Operations Menu:\n";
         cout << "1. Add Matrices\n";
@@ -629,17 +707,18 @@ int main() {
         cout << "4. Exit\n";
         cout << "Enter your choice: ";
         cin >> choice;
+
         switch (choice) {
-            case 1: { 
+            case 1: {
                 int r, c;
                 cout << "Enter dimensions of matrix 1 (rows columns): ";
                 cin >> r >> c;
-                m1 = new Matrix(r, c);
+                m1 = make_unique<Matrix>(r, c);
                 m1->inputMatrix();
 
                 cout << "Enter dimensions of matrix 2 (rows columns): ";
                 cin >> r >> c;
-                m2 = new Matrix(r, c);
+                m2 = make_unique<Matrix>(r, c);
                 m2->inputMatrix();
                 try {
                     Matrix result = m1->add(*m2);
@@ -648,19 +727,17 @@ int main() {
                 } catch (const invalid_argument& e) {
                     cout << "Error: " << e.what() << endl;
                 }
-                delete m1;
-                delete m2;
                 break;
             }
-            case 2: { 
+            case 2: {
                 int r1, c1, r2, c2;
                 cout << "Enter dimensions of matrix 1 (rows columns): ";
                 cin >> r1 >> c1;
-                m1 = new Matrix(r1, c1);
+                m1 = make_unique<Matrix>(r1, c1);
                 m1->inputMatrix();
                 cout << "Enter dimensions of matrix 2 (rows columns): ";
                 cin >> r2 >> c2;
-                m2 = new Matrix(r2, c2);
+                m2 = make_unique<Matrix>(r2, c2);
                 m2->inputMatrix();
                 try {
                     Matrix result = m1->multiply(*m2);
@@ -669,20 +746,17 @@ int main() {
                 } catch (const invalid_argument& e) {
                     cout << "Error: " << e.what() << endl;
                 }
-                delete m1;
-                delete m2;
                 break;
             }
-            case 3: { 
+            case 3: {
                 int r, c;
                 cout << "Enter dimensions of matrix (rows columns): ";
                 cin >> r >> c;
-                m1 = new Matrix(r, c);
+                m1 = make_unique<Matrix>(r, c);
                 m1->inputMatrix();
                 Matrix result = m1->transpose();
                 cout << "Transpose of the matrix:\n";
                 result.displayMatrix();
-                delete m1;
                 break;
             }
             case 4: { // Exit
@@ -696,26 +770,29 @@ int main() {
     }
     return 0;
 }
-
 ```
+![image](https://github.com/user-attachments/assets/df487c74-0085-4e2a-afb2-886eb22ff547)
 
 # Program 9
 ```
 #include <iostream>
 #include <string>
+#include <memory> // For smart pointers
 using namespace std;
 
 class Person {
 protected:
     string name;
 public:
-    
+    // Constructor to initialize the name
     Person(string n) : name(n) {}
- 
+
+    // Virtual function to display person details
     virtual void display() {
         cout << "Name: " << name << endl;
     }
 
+    // Virtual destructor
     virtual ~Person() {}
 };
 
@@ -725,9 +802,10 @@ private:
     float marks;
     int year;
 public:
-    
+    // Constructor to initialize student details
     Student(string n, string c, float m, int y) : Person(n), course(c), marks(m), year(y) {}
-   
+
+    // Override display function to show student details
     void display() override {
         cout << "Student Name: " << name << endl;
         cout << "Course: " << course << endl;
@@ -741,77 +819,77 @@ private:
     string department;
     float salary;
 public:
+    // Constructor to initialize employee details
     Employee(string n, string d, float s) : Person(n), department(d), salary(s) {}
-  
+
+    // Override display function to show employee details
     void display() override {
         cout << "Employee Name: " << name << endl;
         cout << "Department: " << department << endl;
         cout << "Salary: " << salary << endl;
     }
 };
+
 // Main function
 int main() {
-  
-    Person* p1 = new Student("Alice", "Computer Science", 88.5, 2);
-    Person* p2 = new Employee("Bob", "IT", 50000);
-   
+    // Use smart pointers for automatic memory management
+    unique_ptr<Person> p1 = make_unique<Student>("Alice", "Computer Science", 88.5, 2);
+    unique_ptr<Person> p2 = make_unique<Employee>("Bob", "IT", 50000);
+
     cout << "Displaying Student details:" << endl;
     p1->display();
     cout << "\nDisplaying Employee details:" << endl;
     p2->display();
- 
-    delete p1;
-    delete p2;
+
+    // No need to manually delete, smart pointers handle it
     return 0;
 }
 ```
+![image](https://github.com/user-attachments/assets/f3b9d06b-46fb-44dc-b76b-00bee92d6a71)
 
 # Program 10
 ```
 #include <iostream>
 #include <cmath>
-#include <stdexcept> 
+#include <stdexcept>
 using namespace std;
+
 class Triangle {
 private:
     double side1, side2, side3;
+
 public:
-   
-    Triangle(double s1, double s2, double s3) {
+    // Constructor to initialize the triangle sides
+    Triangle(double s1, double s2, double s3) : side1(s1), side2(s2), side3(s3) {
         if (s1 <= 0 || s2 <= 0 || s3 <= 0) {
             throw invalid_argument("Sides must be greater than 0.");
         }
         if (s1 + s2 <= s3 || s1 + s3 <= s2 || s2 + s3 <= s1) {
             throw invalid_argument("Sum of any two sides must be greater than the third side.");
         }
-        side1 = s1;
-        side2 = s2;
-        side3 = s3;
     }
-    
+
+    // Calculate area for right-angled triangle
     double calculateArea() const {
         if (isRightAngled()) {
-            double base = side1, height = side2;
-            return 0.5 * base * height; // Area of right-angled triangle
+            return 0.5 * side1 * side2; // Assuming side1 and side2 are the base and height
         }
         throw invalid_argument("Not a right-angled triangle.");
     }
-  
+
+    // Calculate area using Heron's formula
     double calculateAreaUsingHeronsFormula() const {
         double s = (side1 + side2 + side3) / 2; // Semi-perimeter
-        double area = sqrt(s * (s - side1) * (s - side2) * (s - side3));
-        return area;
+        return sqrt(s * (s - side1) * (s - side2) * (s - side3));
     }
-   
+
+    // Check if the triangle is right-angled
     bool isRightAngled() const {
         double a = side1, b = side2, c = side3;
-        
-        if (a * a + b * b == c * c || a * a + c * c == b * b || b * b + c * c == a * a) {
-            return true;
-        }
-        return false;
+        return (a * a + b * b == c * c || a * a + c * c == b * b || b * b + c * c == a * a);
     }
-    
+
+    // Assignment operator
     Triangle& operator=(const Triangle& other) {
         if (this != &other) {
             side1 = other.side1;
@@ -820,31 +898,33 @@ public:
         }
         return *this;
     }
-    
+
+    // Equality operator
     bool operator==(const Triangle& other) const {
         return (side1 == other.side1 && side2 == other.side2 && side3 == other.side3);
     }
-   
+
+    // Display triangle sides
     void display() const {
         cout << "Sides of the triangle: " << side1 << ", " << side2 << ", " << side3 << endl;
     }
 };
+
 int main() {
     try {
-       
         Triangle t1(3, 4, 5); // Right-angled triangle
         t1.display();
         cout << "Area of the right-angled triangle: " << t1.calculateArea() << endl;
-       
+
         Triangle t2(5, 6, 7); // General triangle
         t2.display();
         cout << "Area using Heron's formula: " << t2.calculateAreaUsingHeronsFormula() << endl;
-      
+
         Triangle t3(0, 0, 0); // Initializing with dummy values
         t3 = t1; 
         cout << "\nAfter assignment, t3 is:\n";
         t3.display();
-      
+
         if (t1 == t3) {
             cout << "\nt1 and t3 are equal." << endl;
         } else {
@@ -856,8 +936,9 @@ int main() {
     }
     return 0;
 }
-
 ```
+![image](https://github.com/user-attachments/assets/3bfa363d-0e9d-49c2-b7d7-c2488c2db3f2)
+
 # Program 11
 ```
 #include <iostream>
@@ -990,28 +1071,44 @@ int main() {
 ```
 #include <iostream>
 #include <stdexcept>
+#include <limits> // Include this header for numeric_limits
 using namespace std;
+
 int main() {
     double p, q;
 
-    cout << "Enter two numbers (p and q): ";
-    cin >> p >> q;
-    try {
-      
-        if (q == 0) {
-            throw runtime_error("Error: Division by zero is not allowed.");
+    while (true) {
+        cout << "Enter two numbers (p and q): ";
+        cin >> p >> q;
+
+        // Check if the input is valid
+        if (cin.fail()) {
+            cin.clear(); // Clear the error flag
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Discard invalid input
+            cout << "Invalid input. Please enter numeric values." << endl;
+            continue; // Retry the input
         }
-       
-        double result = p / q;
-        cout << "Result of " << p << " / " << q << " = " << result << endl;
+
+        try {
+            // Check for division by zero
+            if (q == 0) {
+                throw runtime_error("Error: Division by zero is not allowed.");
+            }
+
+            // Perform the division
+            double result = p / q;
+            cout << "Result of " << p << " / " << q << " = " << result << endl;
+            break; // Exit the loop after successful calculation
+        }
+        catch (const runtime_error& e) {
+            // Handle division by zero error
+            cout << e.what() << endl;
+        }
     }
-    catch (const runtime_error& e) {
-       
-        cout << e.what() << endl;
-    }
+
     return 0;
 }
-
 ```
+![image](https://github.com/user-attachments/assets/5d5d2470-9879-406b-8a85-4215ec892d83)
 
 
