@@ -945,6 +945,7 @@ int main() {
 #include <fstream>
 #include <string>
 using namespace std;
+
 class Student {
 private:
     int rollNo;
@@ -952,11 +953,16 @@ private:
     string studentClass;
     int year;
     float totalMarks;
+
 public:
-  
+    // Constructor to initialize student details
     Student(int r, string n, string c, int y, float t) 
         : rollNo(r), name(n), studentClass(c), year(y), totalMarks(t) {}
-  
+
+    // Default constructor for reading from file
+    Student() : rollNo(0), year(0), totalMarks(0.0) {}
+
+    // Write student details to a file
     void writeToFile(ofstream &file) {
         file << rollNo << endl;
         file << name << endl;
@@ -964,16 +970,18 @@ public:
         file << year << endl;
         file << totalMarks << endl;
     }
-    
+
+    // Read student details from a file
     void readFromFile(ifstream &file) {
         file >> rollNo;
-        file.ignore(); 
+        file.ignore(); // Ignore the newline character after the integer
         getline(file, name);
         getline(file, studentClass);
         file >> year;
         file >> totalMarks;
     }
-   
+
+    // Display student details
     void display() const {
         cout << "Roll No: " << rollNo << endl;
         cout << "Name: " << name << endl;
@@ -982,90 +990,102 @@ public:
         cout << "Total Marks: " << totalMarks << endl;
     }
 };
+
 int main() {
-   
+    // Open file for writing
     ofstream outFile("students.txt");
-   
     if (!outFile) {
         cerr << "File could not be opened for writing!" << endl;
         return 1;
     }
 
-    Student s1(1, "Alice", "Math", 2023, 450);
-    Student s2(2, "Bob", "Science", 2023, 400);
-    Student s3(3, "Charlie", "History", 2023, 480);
-    Student s4(4, "David", "English", 2023, 470);
-    Student s5(5, "Eve", "Computer Science", 2023, 490);
-  
-    s1.writeToFile(outFile);
-    s2.writeToFile(outFile);
-    s3.writeToFile(outFile);
-    s4.writeToFile(outFile);
-    s5.writeToFile(outFile);
- 
-    outFile.close();
-   
-    ifstream inFile("students.txt");
+    // Create student objects
+    Student students[] = {
+        Student(1, "Alice", "Math", 2023, 450),
+        Student(2, "Bob", "Science", 2023, 400),
+        Student(3, "Charlie", "History", 2023, 480),
+        Student(4, "David", "English", 2023, 470),
+        Student(5, "Eve", "Computer Science", 2023, 490)
+    };
 
+    // Write student records to file
+    for (Student& student : students) { // Use non-const reference
+        student.writeToFile(outFile);
+    }
+
+    outFile.close();
+
+    // Open file for reading
+    ifstream inFile("students.txt");
     if (!inFile) {
         cerr << "File could not be opened for reading!" << endl;
         return 1;
     }
+
     cout << "\nStudent records retrieved from file:\n";
-  
-    Student tempStudent(0, "", "", 0, 0);
-   
-    for (int i = 0; i < 5; ++i) {
+
+    Student tempStudent; // Use default constructor
+    // Read student records from file until the end
+    while (inFile.peek() != EOF) {
         tempStudent.readFromFile(inFile);
         tempStudent.display();
         cout << "-------------------------------\n";
     }
-  
+
     inFile.close();
     return 0;
 }
-
 ```
+![image](https://github.com/user-attachments/assets/bb0b7c72-4d16-48c7-adab-993d1caf17af)
+![image](https://github.com/user-attachments/assets/c873737c-1617-4436-b3ea-5a5071b1e6ac)
+
 # Program 12
 ```
 #include <iostream>
 #include <fstream>
 #include <cctype>  
 using namespace std;
+
 int main() {
-    
-    string inputFile = "input.txt";
-    string outputFile = "output.txt";
-   
+    string inputFile = "input.txt";  // Input file name
+    string outputFile = "output.txt"; // Output file name
+
+    // Open the input file
     ifstream inFile(inputFile);
-  
     if (!inFile) {
         cerr << "Error: Unable to open input file!" << endl;
-        return 1;
+        return 1; // Exit with error code
     }
- 
+
+    // Open the output file
     ofstream outFile(outputFile);
-   
     if (!outFile) {
         cerr << "Error: Unable to open output file!" << endl;
-        return 1;
+        return 1; // Exit with error code
     }
-    char ch;
-  
+
+    char ch; // Variable to hold each character
+
+    // Read characters from the input file
     while (inFile.get(ch)) {
-       
+        // Write the character to the output file if it's not a whitespace
         if (!isspace(ch)) {
             outFile.put(ch);
         }
     }
-   
+
+    // Close the file streams
     inFile.close();
     outFile.close();
-    cout << "File contents copied successfully without whitespaces." << endl;
-    return 0;
-}
 
+    cout << "File contents copied successfully without whitespaces." << endl;
+    return 0; // Exit successfully
+}
 ```
+![image](https://github.com/user-attachments/assets/ff470631-1044-41d8-8d96-5533c110df7c)
+![image](https://github.com/user-attachments/assets/78915aea-1977-4b28-b176-d9437275b156)
+![image](https://github.com/user-attachments/assets/01b35db1-8e5f-46ec-9dcb-41421313b363)
+
 
 # Program 13
 ```
