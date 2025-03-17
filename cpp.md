@@ -2,7 +2,7 @@
 
 ```
 #include <iostream>
-#include <cstdlib> // For handling command-line arguments
+#include <cstdlib>
 using namespace std;
 double compute_series_sum(int n) {
     double series_sum = 0.0;    
@@ -10,9 +10,9 @@ double compute_series_sum(int n) {
     for (int i = 1; i <= n; i++) {
         
         if (i % 2 == 1) {
-            series_sum += 1.0 / (i * i); // Add for odd terms
+            series_sum += 1.0 / (i * i); 
         } else {
-            series_sum -= 1.0 / (i * i); // Subtract for even terms
+            series_sum -= 1.0 / (i * i); 
         }
     }    
     return series_sum;
@@ -20,7 +20,7 @@ double compute_series_sum(int n) {
 int main(int argc, char* argv[]) {
     int n;
     if (argc > 1) {
-        n = atoi(argv[1]);  // Convert the argument to an integer
+        n = atoi(argv[1]); 
     } else {
        
         cout << "Enter the number of terms (n): ";
@@ -47,7 +47,7 @@ void removeDuplicates(int arr[], int& n) {
        
         if (uniqueElements.find(arr[i]) == uniqueElements.end()) {
             uniqueElements.insert(arr[i]);
-            arr[index++] = arr[i]; // Place the unique element in the array
+            arr[index++] = arr[i];
         }
     }
   
@@ -114,14 +114,14 @@ int main(int argc, char* argv[]) {
     // Check if any command line arguments were provided
     if (argc < 2) {
         cout << "Please provide a text input as a command line argument." << endl;
-        return 1;  // Return error if no argument is passed
+        return 1; 
     }
     // Concatenate the command line arguments into a single string
     string text = "";
     for (int i = 1; i < argc; i++) {
-        text += string(argv[i]) + " ";  // Add space between words
+        text += string(argv[i]) + " ";  
     }
-    // Call the function to count occurrences
+   
     countAlphabetOccurrences(text);
     return 0;
 }
@@ -132,7 +132,7 @@ int main(int argc, char* argv[]) {
 #include <cstring>
 using namespace std;
 
-// Function to show address of each character in the string
+
 void showCharacterAddresses(const char* str) {
     cout << "Addresses of each character in the string:" << endl;
     while (*str != '\0') {
@@ -141,32 +141,32 @@ void showCharacterAddresses(const char* str) {
     }
 }
 
-// Function to concatenate two strings
+
 void concatenateStrings(char* str1, const char* str2) {
     while (*str1 != '\0') {
-        str1++;  // Move to the end of the first string
+        str1++;
     }
     while (*str2 != '\0') {
-        *str1 = *str2;  // Copy character from str2 to str1
+        *str1 = *str2;
         str1++;
         str2++;
     }
-    *str1 = '\0';  // Add null terminator at the end
+    *str1 = '\0'; 
 }
 
-// Function to compare two strings
+
 int compareStrings(const char* str1, const char* str2) {
     while (*str1 != '\0' && *str2 != '\0') {
         if (*str1 != *str2) {
-            return (*str1 - *str2);  // Return the difference
+            return (*str1 - *str2); 
         }
         str1++;
         str2++;
     }
-    return (*str1 - *str2);  // If one string is shorter, return the difference
+    return (*str1 - *str2);  
 }
 
-// Function to calculate the length of the string using pointers
+
 int calculateLength(const char* str) {
     const char* ptr = str;
     int length = 0;
@@ -177,22 +177,22 @@ int calculateLength(const char* str) {
     return length;
 }
 
-// Function to convert all lowercase characters to uppercase
+ 
 void convertToUppercase(char* str) {
     while (*str != '\0') {
         if (*str >= 'a' && *str <= 'z') {
-            *str = *str - 'a' + 'A';  // Convert to uppercase
+            *str = *str - 'a' + 'A'; 
         }
         str++;
     }
 }
 
-// Function to reverse the string
+
 void reverseString(char* str) {
     int length = calculateLength(str);
     int start = 0, end = length - 1;
     while (start < end) {
-        // Swap characters at start and end
+       
         char temp = str[start];
         str[start] = str[end];
         str[end] = temp;
@@ -205,22 +205,22 @@ void reverseString(char* str) {
 void insertStringAtPosition(char* str1, const char* str2, int position) {
     int length1 = calculateLength(str1);
     int length2 = calculateLength(str2);
-    // Shift the characters of str1 to the right to make space for str2
+   
     for (int i = length1; i >= position; i--) {
         str1[i + length2] = str1[i];
     }
-    // Insert str2 into str1 at the specified position
+  
     for (int i = 0; i < length2; i++) {
         str1[position + i] = str2[i];
     }
-    str1[length1 + length2] = '\0';  // Null-terminate the string
+    str1[length1 + length2] = '\0'; 
 }
 
 int main() {
     int choice;
     char str1[100], str2[100];
     int position;
-    int result; // Declare result here, outside the switch
+    int result; 
 
     do {
         cout << "\nMenu: \n";
@@ -234,7 +234,7 @@ int main() {
         cout << "8. Exit\n";
         cout << "Enter your choice: ";
         cin >> choice;
-        cin.ignore();  // Ignore newline left by previous input
+        cin.ignore(); 
 
         switch (choice) {
             case 1:
@@ -255,7 +255,7 @@ int main() {
                 cin.getline(str1, 100);
                 cout << "Enter second string: ";
                 cin.getline(str2, 100);
-                result = compareStrings(str1, str2);  // Now `result` is declared before the switch
+                result = compareStrings(str1, str2); 
                 if (result == 0) {
                     cout << "The strings are equal." << endl;
                 } else if (result < 0) {
@@ -307,10 +307,10 @@ int main() {
 ```
 #include <iostream>
 using namespace std;
-// Function to merge two sorted arrays into a single sorted array
+
 void mergeArrays(int arr1[], int n1, int arr2[], int n2, int merged[]) {
     int i = 0, j = 0, k = 0;
-    // Merge the two arrays while both arrays have elements
+   
     while (i < n1 && j < n2) {
         if (arr1[i] < arr2[j]) {
             merged[k++] = arr1[i++];
