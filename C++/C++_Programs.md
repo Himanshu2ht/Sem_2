@@ -2,35 +2,53 @@
 
 ```
 #include <iostream>
-#include <cstdlib>
+#include <cstdlib> // For atoi
 using namespace std;
-double compute_series_sum(int n) {
+
+// Function to compute the alternating series sum
+double computeSeriesSum(int n) {
     double series_sum = 0.0;    
     
     for (int i = 1; i <= n; i++) {
-        
+        // Add or subtract based on whether i is odd or even
         if (i % 2 == 1) {
-            series_sum += 1.0 / (i * i); 
+            series_sum += 1.0 / (i * i); // Add for odd i
         } else {
-            series_sum -= 1.0 / (i * i); 
+            series_sum -= 1.0 / (i * i); // Subtract for even i
         }
     }    
     return series_sum;
 }
+
 int main(int argc, char* argv[]) {
     int n;
+
+    // Check if a command-line argument is provided
     if (argc > 1) {
-        n = atoi(argv[1]); 
+        n = atoi(argv[1]); // Convert argument to integer
+        if (n <= 0) { // Check if n is positive
+            cout << "Please enter a positive integer." << endl;
+            return 1; // Exit with an error code
+        }
     } else {
-       
+        // Prompt user for input
         cout << "Enter the number of terms (n): ";
         cin >> n;
+
+        // Validate user input
+        while (n <= 0) {
+            cout << "Please enter a positive integer: ";
+            cin >> n;
+        }
     }
-    double result = compute_series_sum(n);
+
+    // Compute the series sum
+    double result = computeSeriesSum(n);
     cout << "The sum of the first " << n << " terms of the series is: " << result << endl;
     return 0;
 }
 ```
+![image](https://github.com/user-attachments/assets/d3dade25-089e-43ed-898d-6cfb969eb025)
 
 # Program 2
 
@@ -39,93 +57,108 @@ int main(int argc, char* argv[]) {
 #include <unordered_set>
 #include <vector>
 using namespace std;
-void removeDuplicates(int arr[], int& n) {
-   
-    unordered_set<int> uniqueElements;
+
+// Function to remove duplicates from the array
+void removeDuplicates(vector<int>& arr) {
+    unordered_set<int> uniqueElements; // Set to store unique elements
     int index = 0; // Index to keep track of the new array without duplicates
-    for (int i = 0; i < n; i++) {
-       
+
+    for (int i = 0; i < arr.size(); i++) {
+        // If the element is not already in the set, add it
         if (uniqueElements.find(arr[i]) == uniqueElements.end()) {
             uniqueElements.insert(arr[i]);
-            arr[index++] = arr[i];
+            arr[index++] = arr[i]; // Place the unique element in the new position
         }
     }
-  
-    n = index;
+
+    // Resize the vector to contain only unique elements
+    arr.resize(index);
 }
-void printArray(int arr[], int n) {
-    for (int i = 0; i < n; i++) {
-        cout << arr[i] << " ";
+
+// Function to print the elements of the array
+void printArray(const vector<int>& arr) {
+    for (int num : arr) {
+        cout << num << " ";
     }
     cout << endl;
 }
+
 int main() {
     int n;
-   
+
     cout << "Enter the number of elements in the array: ";
     cin >> n;
-    int arr[n];
-   
+
+    // Input validation for the number of elements
+    while (n <= 0) {
+        cout << "Please enter a positive integer for the number of elements: ";
+        cin >> n;
+    }
+
+    vector<int> arr(n); // Use vector for dynamic array allocation
+
     cout << "Enter the elements of the array: ";
     for (int i = 0; i < n; i++) {
         cin >> arr[i];
     }
-   
-    removeDuplicates(arr, n);
-  
+
+    removeDuplicates(arr); // Remove duplicates from the array
+
     cout << "Array after removing duplicates: ";
-    printArray(arr, n);
+    printArray(arr); // Print the modified array
     return 0;
 }
 ```
+![image](https://github.com/user-attachments/assets/0eb763f4-60d8-4492-a258-e656e3d16891)
 
 # Program 3
 ```
 #include <iostream>
-#include <cctype> 
+#include <cctype>
 #include <string>
 #include <map>
+#include <sstream> // For std::ostringstream
 using namespace std;
+
+// Function to count occurrences of each alphabet letter in the given text
 void countAlphabetOccurrences(const string& text) {
     map<char, int> frequency;
-  
+
+    // Count occurrences of each letter
     for (char ch : text) {
-       
-        ch = tolower(ch);   
-      
+        ch = tolower(ch); // Convert to lowercase
         if (isalpha(ch)) {
-            frequency[ch]++;  
+            frequency[ch]++; // Increment the count for the letter
         }
     }
+
     // Print the table of occurrences
     cout << "Alphabet Occurrences:" << endl;
     cout << "Letter | Occurrences" << endl;
     cout << "----------------------" << endl;
     for (char letter = 'a'; letter <= 'z'; letter++) {
-     
-        if (frequency.find(letter) != frequency.end()) {
-            cout << letter << "      | " << frequency[letter] << endl;
-        } else {
-            cout << letter << "      | 0" << endl;
-        }
+        cout << letter << "      | " << frequency[letter] << endl; // Print occurrences
     }
 }
-int main(int argc, char* argv[]) {
-  
-    if (argc < 2) {
-        cout << "Please provide a text input as a command line argument." << endl;
-        return 1; 
+
+int main() {
+    string text;
+
+    cout << "Enter text: ";
+    getline(cin, text); // Read a line of text from the user
+
+    // Check if the text is empty
+    if (text.empty()) {
+        cout << "The provided text is empty." << endl;
+        return 1;
     }
-  
-    string text = "";
-    for (int i = 1; i < argc; i++) {
-        text += string(argv[i]) + " ";  
-    }
-   
-    countAlphabetOccurrences(text);
+
+    countAlphabetOccurrences(text); // Count and display occurrences
     return 0;
 }
 ```
+![image](https://github.com/user-attachments/assets/54c6fc66-d438-4545-a82e-45009424ae12)
+
 # Program 4
 ```
 #include <iostream>
@@ -302,6 +335,7 @@ int main() {
     return 0;
 }
 ```
+![image](https://github.com/user-attachments/assets/0b64c4b0-9020-4e66-b477-78590602ef9e)
 
 # Program 5
 ```
