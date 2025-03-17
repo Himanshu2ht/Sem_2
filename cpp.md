@@ -6,9 +6,9 @@
 using namespace std;
 double compute_series_sum(int n) {
     double series_sum = 0.0;    
-    // Loop through the first n terms of the series
+    
     for (int i = 1; i <= n; i++) {
-        // Alternating signs, (-1)^(i+1)
+        
         if (i % 2 == 1) {
             series_sum += 1.0 / (i * i); // Add for odd terms
         } else {
@@ -19,15 +19,13 @@ double compute_series_sum(int n) {
 }
 int main(int argc, char* argv[]) {
     int n;
-    // Check if command-line argument is passed
     if (argc > 1) {
         n = atoi(argv[1]);  // Convert the argument to an integer
     } else {
-        // Prompt user to input the value of n
+       
         cout << "Enter the number of terms (n): ";
         cin >> n;
     }
-    // Compute and print the sum of the series
     double result = compute_series_sum(n);
     cout << "The sum of the first " << n << " terms of the series is: " << result << endl;
     return 0;
@@ -42,17 +40,17 @@ int main(int argc, char* argv[]) {
 #include <vector>
 using namespace std;
 void removeDuplicates(int arr[], int& n) {
-    // Use an unordered set to store unique elements
+   
     unordered_set<int> uniqueElements;
     int index = 0; // Index to keep track of the new array without duplicates
     for (int i = 0; i < n; i++) {
-        // If the element is not already in the set, add it
+       
         if (uniqueElements.find(arr[i]) == uniqueElements.end()) {
             uniqueElements.insert(arr[i]);
             arr[index++] = arr[i]; // Place the unique element in the array
         }
     }
-    // Update the size of the array to reflect the new size after removing duplicates
+  
     n = index;
 }
 void printArray(int arr[], int n) {
@@ -63,18 +61,18 @@ void printArray(int arr[], int n) {
 }
 int main() {
     int n;
-    // Input the size of the array
+   
     cout << "Enter the number of elements in the array: ";
     cin >> n;
     int arr[n];
-    // Input the elements of the array
+   
     cout << "Enter the elements of the array: ";
     for (int i = 0; i < n; i++) {
         cin >> arr[i];
     }
-    // Remove duplicates
+   
     removeDuplicates(arr, n);
-    // Output the array after removing duplicates
+  
     cout << "Array after removing duplicates: ";
     printArray(arr, n);
     return 0;
@@ -84,19 +82,19 @@ int main() {
 # Program 3
 ```
 #include <iostream>
-#include <cctype>  // For character functions like tolower
+#include <cctype> 
 #include <string>
 #include <map>
 using namespace std;
 void countAlphabetOccurrences(const string& text) {
     map<char, int> frequency;
-    // Loop through each character in the text
+  
     for (char ch : text) {
-        // Convert to lowercase to handle case-insensitivity
+       
         ch = tolower(ch);   
-        // Check if the character is an alphabet letter
+      
         if (isalpha(ch)) {
-            frequency[ch]++;  // Increment the count of the alphabet
+            frequency[ch]++;  
         }
     }
     // Print the table of occurrences
